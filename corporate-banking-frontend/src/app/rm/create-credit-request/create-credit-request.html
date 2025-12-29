@@ -1,0 +1,35 @@
+<h2>Create Credit Request</h2>
+
+<form (ngSubmit)="submit()">
+
+  <select [(ngModel)]="form.clientId" name="clientId" required>
+    <option value="">Select Client</option>
+    <option *ngFor="let c of clients" [value]="c.id">
+      {{ c.companyName }}
+    </option>
+  </select><br><br>
+
+  <input type="number"
+         placeholder="Amount"
+         [(ngModel)]="form.requestAmount"
+         name="requestAmount"
+         required /><br><br>
+
+  <input type="number"
+         placeholder="Tenure (months)"
+         [(ngModel)]="form.tenureMonths"
+         name="tenureMonths"
+         required /><br><br>
+
+  <textarea placeholder="Purpose"
+            [(ngModel)]="form.purpose"
+            name="purpose"
+            required></textarea><br><br>
+
+  <button type="submit" [disabled]="loading">
+    {{ loading ? 'Submitting...' : 'Submit' }}
+  </button>
+
+</form>
+
+<p style="color:red" *ngIf="error">{{ error }}</p>

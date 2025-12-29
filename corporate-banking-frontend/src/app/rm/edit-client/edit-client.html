@@ -1,0 +1,18 @@
+<h2>Edit Client</h2>
+
+<input [(ngModel)]="client.companyName">
+<input [(ngModel)]="client.industry">
+<input [(ngModel)]="client.address">
+<input [(ngModel)]="client.contactName">
+<input [(ngModel)]="client.contactEmail">
+<input [(ngModel)]="client.contactPhone">
+<input type="number" [(ngModel)]="client.annualTurnover">
+
+<label>
+  <input type="checkbox" [(ngModel)]="client.documentsSubmitted">
+  Documents Submitted
+</label>
+
+<br><br>
+
+<button (click)="update()">Update</button>

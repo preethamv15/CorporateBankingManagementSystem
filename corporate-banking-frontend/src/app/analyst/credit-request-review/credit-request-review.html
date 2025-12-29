@@ -1,0 +1,59 @@
+<h2>Credit Requests – Analyst Review</h2>
+
+<div *ngIf="loading">Loading credit requests...</div>
+
+<div *ngIf="error" style="color:red;">
+  {{ error }}
+</div>
+
+<table *ngIf="!loading && requests.length" border="1" width="100%" cellpadding="8">
+  <thead>
+    <tr>
+      <th>Client ID</th>
+      <th>Amount</th>
+      <th>Tenure</th>
+      <th>Purpose</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of requests">
+      <td>{{ r.clientId }}</td>
+      <td>{{ r.requestAmount }}</td>
+      <td>{{ r.tenureMonths }}</td>
+      <td>{{ r.purpose }}</td>
+      <td>{{ r.status }}</td>
+      <td>
+        <button (click)="select(r)" [disabled]="r.status !== 'PENDING'">
+          Review
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<p *ngIf="!loading && !requests.length">
+  No credit requests found.
+</p>
+
+<hr *ngIf="selectedRequest">
+
+<div *ngIf="selectedRequest">
+  <h3>Review Credit Request</h3>
+
+  <p><b>Client ID:</b> {{ selectedRequest.clientId }}</p>
+  <p><b>Amount:</b> {{ selectedRequest.requestAmount }}</p>
+
+  <textarea
+    rows="4"
+    cols="50"
+    placeholder="Enter remarks"
+    [(ngModel)]="remarks">
+  </textarea>
+
+  <br><br>
+
+  <button (click)="approve()">Approve</button>
+  <button (click)="reject()">Reject</button>
+</div>

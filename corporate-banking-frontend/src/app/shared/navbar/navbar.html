@@ -1,0 +1,43 @@
+<nav class="navbar">
+
+  <div class="left">
+    <span class="brand">Corporate Banking</span>
+  </div>
+
+  <div class="right">
+
+    <!-- 🔓 BEFORE LOGIN -->
+    <ng-container *ngIf="!isLoggedIn()">
+      <a routerLink="/login">Login</a>
+      <a routerLink="/register">Register</a>
+    </ng-container>
+
+    <!-- 🔐 AFTER LOGIN -->
+    <ng-container *ngIf="isLoggedIn()">
+
+      <!-- RM LINKS -->
+      <ng-container *ngIf="isRM()">
+        <a routerLink="/rm/clients">Clients</a>
+        <a routerLink="/rm/create-client">Create Client</a>
+        <a routerLink="/rm/create-credit">Create Credit</a>
+        <a routerLink="/rm/credit-requests">Credit Requests</a>
+      </ng-container>
+
+      <!-- ANALYST LINKS -->
+      <ng-container *ngIf="isAnalyst()">
+        <a routerLink="/analyst/credit-requests">Review Credits</a>
+      </ng-container>
+
+      <!-- ADMIN LINKS -->
+      <ng-container *ngIf="isAdmin()">
+        <a routerLink="/admin/users">User Management</a>
+      </ng-container>
+
+      <!-- LOGOUT -->
+      <a (click)="logout()" style="cursor:pointer">Logout</a>
+
+    </ng-container>
+
+  </div>
+
+</nav>

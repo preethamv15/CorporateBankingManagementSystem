@@ -1,0 +1,73 @@
+<h2>Create Client</h2>
+
+<form (ngSubmit)="submit()">
+
+  <input
+    type="text"
+    placeholder="Company Name *"
+    [(ngModel)]="client.companyName"
+    name="companyName"
+  />
+
+  <input
+    type="text"
+    placeholder="Industry *"
+    [(ngModel)]="client.industry"
+    name="industry"
+  />
+
+  <input
+    type="text"
+    placeholder="Address"
+    [(ngModel)]="client.address"
+    name="address"
+  />
+
+  <input
+    type="text"
+    placeholder="Contact Name"
+    [(ngModel)]="client.contactName"
+    name="contactName"
+  />
+
+  <input
+    type="email"
+    placeholder="Contact Email *"
+    [(ngModel)]="client.contactEmail"
+    name="contactEmail"
+  />
+
+  <input
+    type="text"
+    placeholder="Contact Phone"
+    [(ngModel)]="client.contactPhone"
+    name="contactPhone"
+  />
+
+  <input
+    type="number"
+    placeholder="Annual Turnover *"
+    [(ngModel)]="client.annualTurnover"
+    name="annualTurnover"
+  />
+
+  <label>
+    <input
+      type="checkbox"
+      [(ngModel)]="client.documentsSubmitted"
+      name="documentsSubmitted"
+    />
+    Documents Submitted
+  </label>
+
+  <br /><br />
+
+  <button type="submit" [disabled]="loading">
+    {{ loading ? 'Saving...' : 'Create Client' }}
+  </button>
+
+  <button type="button" (click)="cancel()">Cancel</button>
+
+</form>
+
+<p *ngIf="error" style="color:red">{{ error }}</p>

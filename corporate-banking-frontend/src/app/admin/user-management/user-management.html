@@ -1,0 +1,41 @@
+<h2>Admin – User Management</h2>
+
+<form (ngSubmit)="createUser()">
+  <input placeholder="Username" [(ngModel)]="username" name="username" required />
+  <input placeholder="Email" [(ngModel)]="email" name="email" required />
+  <input placeholder="Password" [(ngModel)]="password" name="password" required />
+
+  <select [(ngModel)]="role" name="role">
+    <option value="RM">RM</option>
+    <option value="ANALYST">ANALYST</option>
+  </select>
+
+  <button type="submit">Create User</button>
+</form>
+
+<p style="color:green" *ngIf="success">{{ success }}</p>
+<p style="color:red" *ngIf="error">{{ error }}</p>
+
+<hr>
+
+<table border="1" width="100%">
+  <tr>
+    <th>Username</th>
+    <th>Email</th>
+    <th>Role</th>
+    <th>Status</th>
+    <th>Action</th>
+  </tr>
+
+  <tr *ngFor="let u of users">
+    <td>{{ u.username }}</td>
+    <td>{{ u.email }}</td>
+    <td>{{ u.role }}</td>
+    <td>{{ u.active ? 'ACTIVE' : 'DISABLED' }}</td>
+    <td>
+      <button (click)="toggle(u)">
+        {{ u.active ? 'Disable' : 'Enable' }}
+      </button>
+    </td>
+  </tr>
+</table>

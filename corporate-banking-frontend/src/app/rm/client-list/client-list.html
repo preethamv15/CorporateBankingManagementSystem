@@ -1,0 +1,37 @@
+<div>
+
+  <h2>My Clients</h2>
+  <button (click)="create()">+ Create Client</button>
+
+  <p *ngIf="loading">Loading...</p>
+  <p *ngIf="error" style="color:red">{{ error }}</p>
+
+  <table *ngIf="!loading && clients.length > 0" border="1" cellpadding="8">
+    <thead>
+      <tr>
+        <th>Company</th>
+        <th>Industry</th>
+        <th>Email</th>
+        <th>Turnover</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let c of clients">
+        <td>{{ c.companyName }}</td>
+        <td>{{ c.industry }}</td>
+        <td>{{ c.contactEmail }}</td>
+        <td>{{ c.annualTurnover }}</td>
+        <td>
+          <button (click)="edit(c.id)">Edit</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!loading && clients.length === 0">
+    No clients found.
+  </p>
+
+</div>

@@ -9,8 +9,10 @@ import { Client } from '../client.model';
   selector: 'app-edit-client',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './edit-client.html'
+  templateUrl: './edit-client.html',
+  styleUrls: ['./edit-client.css']
 })
+
 export class EditClientComponent implements OnInit {
 
   client!: Client;
@@ -25,22 +27,26 @@ export class EditClientComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id')!;
-    this.loadClient();
-  }
+  this.id = this.route.snapshot.paramMap.get('id')!;
+  console.log('Edit Client ID:', this.id);  
+  this.loadClient();
+}
 
   loadClient(): void {
-    this.service.getClientById(this.id).subscribe({
-      next: (res) => {
-        this.client = res;
-        this.loading = false;
-      },
-      error: () => {
-        this.error = 'Failed to load client';
-        this.loading = false;
-      }
-    });
-  }
+  this.service.getClientById(this.id).subscribe({
+    next: (res) => {
+      console.log('Client loaded:', res); 
+      this.client = res;
+      this.loading = false;
+    },
+    error: (err) => {
+      console.error(err);                
+      this.error = 'Failed to load client';
+      this.loading = false;
+    }
+  });
+}
+
 
   update(): void {
     this.service.updateClient(this.id, this.client).subscribe({

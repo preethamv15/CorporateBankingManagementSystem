@@ -7,7 +7,8 @@ import { CreditRequestService } from '../../credit-requests/credit-requests.serv
   selector: 'app-credit-request-review',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './credit-request-review.html'
+  templateUrl: './credit-request-review.html',
+  styleUrls: ['./credit-request-review.css']
 })
 export class CreditRequestReviewComponent implements OnInit {
 

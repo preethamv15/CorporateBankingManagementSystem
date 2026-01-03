@@ -1,35 +1,81 @@
-<h2>Create Credit Request</h2>
+<div class="form-container">
 
-<form (ngSubmit)="submit()">
+  <h2>Create Credit Request</h2>
 
-  <select [(ngModel)]="form.clientId" name="clientId" required>
-    <option value="">Select Client</option>
-    <option *ngFor="let c of clients" [value]="c.id">
-      {{ c.companyName }}
-    </option>
-  </select><br><br>
+  <p *ngIf="error" class="error">
+    {{ error }}
+  </p>
 
-  <input type="number"
-         placeholder="Amount"
-         [(ngModel)]="form.requestAmount"
-         name="requestAmount"
-         required /><br><br>
+  <form (ngSubmit)="submit()" novalidate>
 
-  <input type="number"
-         placeholder="Tenure (months)"
-         [(ngModel)]="form.tenureMonths"
-         name="tenureMonths"
-         required /><br><br>
+    <div class="form-grid">
 
-  <textarea placeholder="Purpose"
-            [(ngModel)]="form.purpose"
-            name="purpose"
-            required></textarea><br><br>
+      <div class="form-group full">
+        <label>Select Client *</label>
+        <select
+          [(ngModel)]="form.clientId"
+          name="clientId"
+          required
+        >
+          <option value="">-- Select Client --</option>
+          <option *ngFor="let c of clients" [value]="c.id">
+            {{ c.companyName }}
+          </option>
+        </select>
+      </div>
 
-  <button type="submit" [disabled]="loading">
-    {{ loading ? 'Submitting...' : 'Submit' }}
-  </button>
+      <div class="form-group">
+        <label>Request Amount *</label>
+        <input
+          type="number"
+          [(ngModel)]="form.requestAmount"
+          name="requestAmount"
+          min="1"
+          placeholder="Enter amount"
+          required
+        />
+      </div>
 
-</form>
+      <div class="form-group">
+        <label>Tenure (Months) *</label>
+        <input
+          type="number"
+          [(ngModel)]="form.tenureMonths"
+          name="tenureMonths"
+          min="1"
+          placeholder="Enter tenure"
+          required
+        />
+      </div>
 
-<p style="color:red" *ngIf="error">{{ error }}</p>
+      <div class="form-group full">
+        <label>Purpose *</label>
+        <textarea
+          [(ngModel)]="form.purpose"
+          name="purpose"
+          rows="4"
+          placeholder="Enter purpose"
+          required
+        ></textarea>
+      </div>
+
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="primary" [disabled]="loading">
+        {{ loading ? 'Submitting...' : 'Submit Request' }}
+      </button>
+
+      <!-- ✅ FIXED -->
+      <button
+        type="button"
+        class="secondary"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+    </div>
+
+  </form>
+
+</div>

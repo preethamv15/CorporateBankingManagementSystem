@@ -9,8 +9,10 @@ import { Client } from '../client.model';
   selector: 'app-create-client',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './create-client.html'
+  templateUrl: './create-client.html',
+  styleUrls: ['./create-client.css']
 })
+
 export class CreateClientComponent {
 
   client: Client = {

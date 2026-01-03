@@ -6,7 +6,8 @@ import { CreditRequestService } from '../../credit-requests/credit-requests.serv
   selector: 'app-credit-request-list',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './credit-request-list.html'
+  templateUrl: './credit-request-list.html',
+  styleUrls: ['./credit-request-list.css']
 })
 export class CreditRequestListComponent implements OnInit {
 
@@ -22,7 +23,7 @@ export class CreditRequestListComponent implements OnInit {
         this.requests = res;
         this.loading = false;
       },
-      error: (err: any) => {
+      error: err => {
         console.error(err);
         this.error = 'Failed to load credit requests';
         this.loading = false;

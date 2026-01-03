@@ -1,36 +1,42 @@
-<div>
+<div class="client-container">
 
-  <h2>My Clients</h2>
-  <button (click)="create()">+ Create Client</button>
+  <div class="header">
+    <h2>My Clients</h2>
+    <button class="primary-btn" (click)="create()">+ Create Client</button>
+  </div>
 
-  <p *ngIf="loading">Loading...</p>
-  <p *ngIf="error" style="color:red">{{ error }}</p>
+  <div class="status">
+    <p *ngIf="loading" class="loading">Loading clients...</p>
+    <p *ngIf="error" class="error">{{ error }}</p>
+  </div>
 
-  <table *ngIf="!loading && clients.length > 0" border="1" cellpadding="8">
-    <thead>
-      <tr>
-        <th>Company</th>
-        <th>Industry</th>
-        <th>Email</th>
-        <th>Turnover</th>
-        <th>Action</th>
-      </tr>
-    </thead>
+  <div class="table-wrapper" *ngIf="!loading && clients.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Company</th>
+          <th>Industry</th>
+          <th>Email</th>
+          <th>Turnover</th>
+          <th>Action</th>
+        </tr>
+      </thead>
 
-    <tbody>
-      <tr *ngFor="let c of clients">
-        <td>{{ c.companyName }}</td>
-        <td>{{ c.industry }}</td>
-        <td>{{ c.contactEmail }}</td>
-        <td>{{ c.annualTurnover }}</td>
-        <td>
-          <button (click)="edit(c.id)">Edit</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+      <tbody>
+        <tr *ngFor="let c of clients">
+          <td>{{ c.companyName }}</td>
+          <td>{{ c.industry }}</td>
+          <td>{{ c.contactEmail }}</td>
+          <td>{{ c.annualTurnover }}</td>
+          <td>
+            <button class="edit-btn" (click)="edit(c.id)">Edit</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <p *ngIf="!loading && clients.length === 0">
+  <p *ngIf="!loading && clients.length === 0" class="empty">
     No clients found.
   </p>
 

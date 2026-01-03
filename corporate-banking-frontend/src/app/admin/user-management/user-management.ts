@@ -7,17 +7,22 @@ import { HttpClient } from '@angular/common/http';
   selector: 'app-user-management',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './user-management.html'
+  templateUrl: './user-management.html',
+  styleUrls: ['./user-management.css']
 })
 export class UserManagementComponent implements OnInit {
 
+  // users list
   users: any[] = [];
 
+  // create user form fields
   username = '';
   email = '';
   password = '';
   role = 'RM';
 
+  // ui state
+  showCreateForm = false;
   loading = false;
   error = '';
   success = '';
@@ -30,16 +35,34 @@ export class UserManagementComponent implements OnInit {
     this.loadUsers();
   }
 
-  // 🔹 FETCH USERS
-  loadUsers() {
+  // 🔹 Load all users
+  loadUsers(): void {
     this.http.get<any[]>(`${this.api}/users`).subscribe({
-      next: res => this.users = res,
-      error: () => this.error = 'Failed to load users'
+      next: res => {
+        this.users = res;
+      },
+      error: () => {
+        this.error = 'Failed to load users';
+      }
     });
   }
 
-  // 🔹 CREATE USER
-  createUser() {
+  // 🔹 Show / hide create user form
+  toggleCreateForm(): void {
+    this.showCreateForm = !this.showCreateForm;
+    this.error = '';
+    this.success = '';
+
+    // reset form when closing
+    if (!this.showCreateForm) {
+      this.resetForm();
+    }
+  }
+
+  // 🔹 Create new user
+  createUser(): void {
+    this.error = '';
+    this.success = '';
     this.loading = true;
 
     this.http.post(`${this.api}/users`, {
@@ -52,10 +75,8 @@ export class UserManagementComponent implements OnInit {
       next: () => {
         this.success = 'User created successfully';
         this.loading = false;
-        this.username = '';
-        this.email = '';
-        this.password = '';
-        this.role = 'RM';
+        this.resetForm();
+        this.showCreateForm = false;
         this.loadUsers();
       },
       error: () => {
@@ -65,11 +86,19 @@ export class UserManagementComponent implements OnInit {
     });
   }
 
-  // 🔹 ENABLE / DISABLE
-  toggle(user: any) {
+  // 🔹 Enable / Disable user
+  toggle(user: any): void {
     this.http.put(
       `${this.api}/users/${user.id}/status?active=${!user.active}`,
       {}
     ).subscribe(() => this.loadUsers());
+  }
+
+  // 🔹 Reset form fields
+  private resetForm(): void {
+    this.username = '';
+    this.email = '';
+    this.password = '';
+    this.role = 'RM';
   }
 }

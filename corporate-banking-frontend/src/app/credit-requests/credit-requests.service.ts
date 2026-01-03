@@ -26,10 +26,12 @@ export class CreditRequestService {
 }
 
 updateStatus(id: string, status: string, remarks: string) {
-  return this.http.put(
-    `http://localhost:8080/api/credit-requests/${id}?status=${status}&remarks=${remarks}`,
-    {}
-  );
+  const url =
+    `http://localhost:8080/api/credit-requests/${id}` +
+    `?status=${status}&remarks=${encodeURIComponent(remarks)}`;
+
+  return this.http.put(url, {}); // ✅ EMPTY BODY (CRITICAL)
 }
+
 
 }

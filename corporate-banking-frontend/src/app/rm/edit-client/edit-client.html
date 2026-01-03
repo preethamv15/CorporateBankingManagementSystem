@@ -1,18 +1,121 @@
-<h2>Edit Client</h2>
+<div class="form-container">
 
-<input [(ngModel)]="client.companyName">
-<input [(ngModel)]="client.industry">
-<input [(ngModel)]="client.address">
-<input [(ngModel)]="client.contactName">
-<input [(ngModel)]="client.contactEmail">
-<input [(ngModel)]="client.contactPhone">
-<input type="number" [(ngModel)]="client.annualTurnover">
+  <h2>Edit Client</h2>
 
-<label>
-  <input type="checkbox" [(ngModel)]="client.documentsSubmitted">
-  Documents Submitted
-</label>
+  <!-- Loading state -->
+  <p *ngIf="loading" class="loading">
+    Loading client details...
+  </p>
 
-<br><br>
+  <!-- Error state -->
+  <p *ngIf="error" class="error">
+    {{ error }}
+  </p>
 
-<button (click)="update()">Update</button>
+  <!-- Form (renders ONLY when client is loaded) -->
+  <form
+    *ngIf="!loading && client"
+    (ngSubmit)="update()"
+    novalidate
+  >
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>Company Name *</label>
+        <input
+          type="text"
+          [(ngModel)]="client.companyName"
+          name="companyName"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Industry *</label>
+        <input
+          type="text"
+          [(ngModel)]="client.industry"
+          name="industry"
+          required
+        />
+      </div>
+
+      <div class="form-group full">
+        <label>Address</label>
+        <input
+          type="text"
+          [(ngModel)]="client.address"
+          name="address"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Contact Name</label>
+        <input
+          type="text"
+          [(ngModel)]="client.contactName"
+          name="contactName"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Contact Email *</label>
+        <input
+          type="email"
+          [(ngModel)]="client.contactEmail"
+          name="contactEmail"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Contact Phone</label>
+        <input
+          type="text"
+          [(ngModel)]="client.contactPhone"
+          name="contactPhone"
+        />
+      </div>
+
+      <div class="form-group">
+        <label>Annual Turnover *</label>
+        <input
+          type="number"
+          [(ngModel)]="client.annualTurnover"
+          name="annualTurnover"
+          min="1"
+          required
+        />
+      </div>
+
+      <div class="form-group checkbox">
+        <label>
+          <input
+            type="checkbox"
+            [(ngModel)]="client.documentsSubmitted"
+            name="documentsSubmitted"
+          />
+          Documents Submitted
+        </label>
+      </div>
+
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="primary">
+        Update Client
+      </button>
+
+      <button
+        type="button"
+        class="secondary"
+        (click)="cancel()"
+      >
+        Cancel
+      </button>
+    </div>
+
+  </form>
+
+</div>

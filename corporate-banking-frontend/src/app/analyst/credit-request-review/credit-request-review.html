@@ -1,59 +1,86 @@
-<h2>Credit Requests – Analyst Review</h2>
+<div class="review-container">
 
-<div *ngIf="loading">Loading credit requests...</div>
+  <h2>Credit Requests – Analyst Review</h2>
 
-<div *ngIf="error" style="color:red;">
-  {{ error }}
-</div>
+  <!-- Loading -->
+  <p *ngIf="loading" class="loading">
+    Loading credit requests...
+  </p>
 
-<table *ngIf="!loading && requests.length" border="1" width="100%" cellpadding="8">
-  <thead>
-    <tr>
-      <th>Client ID</th>
-      <th>Amount</th>
-      <th>Tenure</th>
-      <th>Purpose</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let r of requests">
-      <td>{{ r.clientId }}</td>
-      <td>{{ r.requestAmount }}</td>
-      <td>{{ r.tenureMonths }}</td>
-      <td>{{ r.purpose }}</td>
-      <td>{{ r.status }}</td>
-      <td>
-        <button (click)="select(r)" [disabled]="r.status !== 'PENDING'">
-          Review
-        </button>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <!-- Error -->
+  <p *ngIf="error" class="error">
+    {{ error }}
+  </p>
 
-<p *ngIf="!loading && !requests.length">
-  No credit requests found.
-</p>
+  <!-- Requests Table -->
+  <div class="table-wrapper" *ngIf="!loading && requests.length">
 
-<hr *ngIf="selectedRequest">
+    <table>
+      <thead>
+        <tr>
+          <th>Client ID</th>
+          <th>Amount</th>
+          <th>Tenure</th>
+          <th>Purpose</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
 
-<div *ngIf="selectedRequest">
-  <h3>Review Credit Request</h3>
+      <tbody>
+        <tr *ngFor="let r of requests">
+          <td>{{ r.clientId }}</td>
+          <td>{{ r.requestAmount }}</td>
+          <td>{{ r.tenureMonths }}</td>
+          <td>{{ r.purpose }}</td>
+          <td>
+            <span class="status" [ngClass]="r.status?.toLowerCase()">
+              {{ r.status }}
+            </span>
+          </td>
+          <td>
+            <button
+              class="review-btn"
+              (click)="select(r)"
+              [disabled]="r.status !== 'PENDING'"
+            >
+              Review
+            </button>
+          </td>
+        </tr>
+      </tbody>
 
-  <p><b>Client ID:</b> {{ selectedRequest.clientId }}</p>
-  <p><b>Amount:</b> {{ selectedRequest.requestAmount }}</p>
+    </table>
 
-  <textarea
-    rows="4"
-    cols="50"
-    placeholder="Enter remarks"
-    [(ngModel)]="remarks">
-  </textarea>
+  </div>
 
-  <br><br>
+  <p *ngIf="!loading && !requests.length" class="empty">
+    No credit requests found.
+  </p>
 
-  <button (click)="approve()">Approve</button>
-  <button (click)="reject()">Reject</button>
+  <!-- Review Panel -->
+  <div *ngIf="selectedRequest" class="review-panel">
+
+    <h3>Review Credit Request</h3>
+
+    <div class="review-details">
+      <p><b>Client ID:</b> {{ selectedRequest.clientId }}</p>
+      <p><b>Amount:</b> {{ selectedRequest.requestAmount }}</p>
+      <p><b>Tenure:</b> {{ selectedRequest.tenureMonths }} months</p>
+    </div>
+
+    <label>Remarks</label>
+    <textarea
+      rows="4"
+      placeholder="Enter remarks"
+      [(ngModel)]="remarks"
+    ></textarea>
+
+    <div class="actions">
+      <button class="approve" (click)="approve()">Approve</button>
+      <button class="reject" (click)="reject()">Reject</button>
+    </div>
+
+  </div>
+
 </div>

@@ -9,7 +9,8 @@ import { ClientsService } from '../clients.service';
   selector: 'app-create-credit-request',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './create-credit-request.html'
+  templateUrl: './create-credit-request.html',
+  styleUrls: ['./create-credit-request.css']
 })
 export class CreateCreditRequestComponent implements OnInit {
 
@@ -34,14 +35,14 @@ export class CreateCreditRequestComponent implements OnInit {
   ngOnInit(): void {
     this.clientsService.getMyClients().subscribe({
       next: res => this.clients = res,
-      error: (err: any) => {
+      error: err => {
         console.error(err);
         this.error = 'Failed to load clients';
       }
     });
   }
 
-  submit() {
+  submit(): void {
     this.error = '';
 
     if (
@@ -60,11 +61,16 @@ export class CreateCreditRequestComponent implements OnInit {
       next: () => {
         this.router.navigate(['/rm/credit-requests']);
       },
-      error: (err: any) => {
+      error: err => {
         console.error(err);
         this.error = 'Failed to create credit request';
         this.loading = false;
       }
     });
+  }
+
+  // ✅ FIX: move router usage to TS
+  cancel(): void {
+    this.router.navigate(['/rm/credit-requests']);
   }
 }

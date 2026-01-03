@@ -8,8 +8,10 @@ import { Client } from '../client.model';
   selector: 'app-client-list',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './client-list.html'
+  templateUrl: './client-list.html',
+  styleUrls: ['./client-list.css']
 })
+
 export class ClientListComponent implements OnInit {
 
   clients: Client[] = [];
